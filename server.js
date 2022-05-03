@@ -7,7 +7,7 @@ const formatMessage = require('./utils/messages');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
 
 console.log(process.env.WEATHER_KEY);
-
+const test = () => console.log('tere')
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);

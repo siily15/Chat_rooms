@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+//const axios = require('axios').default;
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
@@ -8,7 +8,6 @@ const userList = document.getElementById('users');
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true,
 });
-
 const socket = io();
 
 // Join chatroom
@@ -65,7 +64,8 @@ chatForm.addEventListener('submit', (e) => {
 const getWeather = (command) => {
     if (command.includes(":")) {
         const city = command.split(':').pop() ?? 'Kuressaare'
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eaa1a3643e0bea74c9def77a7761c7c3`).then(res => console.log(res))
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eaa1a3643e0bea74c9def77a7761c7c3&units=metric`).then(res => res.json())
+        .then(data => console.log(data))
     }
 }
 
