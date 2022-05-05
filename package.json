@@ -6,7 +6,7 @@
     "scripts": {
         "test": "node server",
         "dev": "nodemon server",
-        "build": "nodemon server"
+        "build": "nodemon build"
     },
     "author": "Arno kosk",
     "license": "ISC",
