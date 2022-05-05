@@ -1,3 +1,5 @@
+let Gif_Key = "XPQSbQMEyzocZbQqMoYAJuLWTL5D5b9n"
+
 //const axios = require('axios').default;
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
@@ -43,12 +45,9 @@ chatForm.addEventListener('submit', (e) => {
         }
     }
     else {
-
         socket.emit('chatMessage', msg,)
     }
-
     msg = msg.trim();
-
     if (!msg) {
         return false;
     }
@@ -118,3 +117,34 @@ document.getElementById('leave-btn').addEventListener('click', () => {
     } else {
     }
 });
+
+document.addEventListener("DOMContentLoaded", init);
+function init() {
+    document.getElementById("btnSearch").addEventListener("click", ev => {
+        ev.preventDefault(); //to stop the page reload
+        let url = `https://api.giphy.com/v1/gifs/search?api_key=${Gif_Key}&limit=1&q=`;
+        let str = document.getElementById("search").value.trim();
+        url = url.concat(str);
+        console.log(url)
+        fetch(url)
+            .then(response => response.json())
+            .then(content => {
+                console.log(content.data)
+                console.log('META', content.meta)
+                let fig = document.createElement('figure');
+                let img = document.createElement('img');
+                let fc = document.createElement('figcaption');
+                img.src = content.data[0].images.downsized.url;
+                img.alt = content.data[0].title;
+                fc.textContent = content.data[0].title;
+                fig.appendChild(img);
+                fig.appendChild(fc);
+                let out = document.querySelector(".out");
+                out.insertAdjacentElement("afterbegin", fig);
+                document.querySelector("#search").value = "";
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    })
+}
