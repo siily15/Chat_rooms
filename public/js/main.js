@@ -21,7 +21,7 @@ socket.on('roomUsers', ({ room, users }) => {
 
 // Message from server
 socket.on('message', (message) => {
-    console.log(message);
+    // console.log(message);
     outputMessage(message);
 
     // Scroll down
@@ -39,12 +39,12 @@ chatForm.addEventListener('submit', (e) => {
     if (msg[0] === '/') {
         if (msg.includes('/weather')) {
             getWeather(msg)
-            console.log()
+            // console.log()
         }
     }
     else {
 
-        socket.emit('chatMessage', msg)
+        socket.emit('chatMessage', msg,)
     }
 
     msg = msg.trim();
@@ -64,12 +64,21 @@ chatForm.addEventListener('submit', (e) => {
 const getWeather = (command) => {
     if (command.includes(":")) {
         const city = command.split(':').pop() ?? 'Kuressaare'
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eaa1a3643e0bea74c9def77a7761c7c3&units=metric`).then(res => res.json())
-            .then(data => socket.emit('chatMessage', data.main.temp))
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eaa1a3643e0bea74c9def77a7761c7c3&units=metric`).then(res => {
+            if (!res.ok) {
+                socket.emit('chatMessage', msg.value + 'wrong city name')
+            }
+            return res.json()
+            //return res.json()
+        }).then(data => socket.emit('chatMessage', data.main.temp + "℃",))
+
+
+        // if (city === ) {
+        //     socket.emit('chatmessage', msg + "error",)
+        // }
     }
 }
-//if (msg)
-//function
+
 // Output message to DOM
 function outputMessage(message) {
     const div = document.createElement('div');
