@@ -62,6 +62,6 @@ io.on('connect', socket => {
     });
 });
 
-const PORT = 3000 || procress.env.PORT;
+const PORT = 8000 || procress.env.PORT;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -65,9 +65,15 @@ const getWeather = (command) => {
     if (command.includes(":")) {
         const city = command.split(':').pop() ?? 'Kuressaare'
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eaa1a3643e0bea74c9def77a7761c7c3&units=metric`).then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => socket.emit('chatMessage', renderWeather))
     }
+    function renderWeather(data) {
+        data.main.temp
+    } 
 }
+
+
+
 
 // Output message to DOM
 function outputMessage(message) {

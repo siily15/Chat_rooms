@@ -4,19 +4,24 @@
   "description": "realtime chat",
   "main": "server.js",
   "scripts": {
-    "test": "node server",
-    "dev": "nodemon server"
+    "test": "node server ",
+    "dev": "nodemon server",
+    "tailwind": "postcss public/css/style.css -o public/css/output.css"
   },
-  "author": "Arno kosk",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "moment": "^2.29.3",
+    "postcss-cli": "^9.1.0",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "autoprefixer": "^10.4.7",
+    "nodemon": "^2.0.15",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24"
   }
 }
