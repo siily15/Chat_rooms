@@ -30,6 +30,15 @@ socket.on('message', (message) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+//Prompt the user before leave chat room
+document.getElementById('leave-btn').addEventListener('click', () => {
+    const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
+    if (leaveRoom) {
+        window.location = '../index.html';
+    } else {
+    }
+});
+
 // Message submit
 chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -47,13 +56,19 @@ chatForm.addEventListener('submit', (e) => {
     else {
         socket.emit('chatMessage', msg,)
     }
+    if (msg[0] === '/') {
+        if (msg.includes('/gif')) {
+            getGif(msg)
+            console.log()
+        }
+    }
+    else {
+        socket.emit('chatMessage', msg,)
+    }
     msg = msg.trim();
     if (!msg) {
         return false;
     }
-
-    // Emit message to server
-    //socket.emit('chatMessage', msg);
 
     // Clear input
     e.target.elements.msg.value = '';
@@ -70,13 +85,23 @@ const getWeather = (command) => {
             return res.json()
             //return res.json()
         }).then(data => socket.emit('chatMessage', data.main.temp + "℃",))
-
-
-        // if (city === ) {
-        //     socket.emit('chatmessage', msg + "error",)
-        // }
     }
 }
+
+const getGif = (command_gif) => {
+    if (command_gif.includes(":")) {
+        const gif = command_gif.split(':').pop()
+        fetch(`https://api.giphy.com/v1/gifs/search${gif}?api_key=${Gif_Key}&limit=1&q=`).then(res => {
+            if (!res.ok) {
+                console.log(res.json())
+                //socket.emit('chatMessage', msg.value + 'wrong city name')
+            }
+            //return res.json()
+        })//.then( => socket.emit('chatMessage', meta.msg))
+    }
+}
+
+
 
 // Output message to DOM
 function outputMessage(message) {
@@ -109,42 +134,34 @@ function outputUsers(users) {
     });
 }
 
-//Prompt the user before leave chat room
-document.getElementById('leave-btn').addEventListener('click', () => {
-    const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
-    if (leaveRoom) {
-        window.location = '../index.html';
-    } else {
-    }
-});
 
-document.addEventListener("DOMContentLoaded", init);
-function init() {
-    document.getElementById("btnSearch").addEventListener("click", ev => {
-        ev.preventDefault(); //to stop the page reload
-        let url = `https://api.giphy.com/v1/gifs/search?api_key=${Gif_Key}&limit=1&q=`;
-        let str = document.getElementById("search").value.trim();
-        url = url.concat(str);
-        console.log(url)
-        fetch(url)
-            .then(response => response.json())
-            .then(content => {
-                console.log(content.data)
-                console.log('META', content.meta)
-                let fig = document.createElement('figure');
-                let img = document.createElement('img');
-                let fc = document.createElement('figcaption');
-                img.src = content.data[0].images.downsized.url;
-                img.alt = content.data[0].title;
-                fc.textContent = content.data[0].title;
-                fig.appendChild(img);
-                fig.appendChild(fc);
-                let out = document.querySelector(".out");
-                out.insertAdjacentElement("afterbegin", fig);
-                document.querySelector("#search").value = "";
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    })
-}
+// document.addEventListener("DOMContentLoaded", init);
+// function init() {
+//     document.getElementById("btnSearch").addEventListener("click", ev => {
+//         ev.preventDefault(); //to stop the page reload
+//         let url = `https://api.giphy.com/v1/gifs/search?api_key=${Gif_Key}&limit=1&q=`;
+//         let str = document.getElementById("search").value.trim();
+//         url = url.concat(str);
+//         console.log(url)
+//         fetch(url)
+//             .then(response => response.json())
+//             .then(content => {
+//                 console.log(content.data)
+//                 console.log('META', content.meta)
+//                 let fig = document.createElement('figure');
+//                 let img = document.createElement('img');
+//                 let fc = document.createElement('figcaption');
+//                 img.src = content.data[0].images.downsized.url;
+//                 img.alt = content.data[0].title;
+//                 fc.textContent = content.data[0].title;
+//                 fig.appendChild(img);
+//                 fig.appendChild(fc);
+//                 let out = document.querySelector(".out");
+//                 out.insertAdjacentElement("afterbegin", fig);
+//                 document.querySelector("#search").value = "";
+//             })
+//             .catch(err => {
+//                 console.log(err);
+//             })
+//     })
+// }
