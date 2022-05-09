@@ -53,13 +53,11 @@ chatForm.addEventListener('submit', (e) => {
             // console.log()
         }
     }
-    else {
-        socket.emit('chatMessage', msg,)
-    }
+
     if (msg[0] === '/') {
         if (msg.includes('/gif')) {
             getGif(msg)
-            console.log()
+            //console.log()
         }
     }
     else {
@@ -84,22 +82,30 @@ const getWeather = (command) => {
             }
             return res.json()
             //return res.json()
-        }).then(data => socket.emit('chatMessage', data.main.temp + "℃",))
+        }).then(data => socket.emit('chatMessage', data.main.temp + " ℃ " + city,))
     }
 }
 
 const getGif = (command_gif) => {
     if (command_gif.includes(":")) {
         const gif = command_gif.split(':').pop()
-        fetch(`https://api.giphy.com/v1/gifs/search${gif}?api_key=${Gif_Key}&limit=1&q=`).then(res => {
-            if (!res.ok) {
-                console.log(res.json())
-                //socket.emit('chatMessage', msg.value + 'wrong city name')
-            }
-            //return res.json()
-        })//.then( => socket.emit('chatMessage', meta.msg))
+        fetch(`https://api.giphy.com/v1/gifs/search?${gif}&api_key=${Gif_Key}&limit=1&q=`).then(res => {
+            //console.log(res.json());
+            return res.json()
+        }).then(data => socket.emit('chatMessage', data))
     }
 }
+
+// function outputMessage(img) {
+//     const img = document.createElement('img')
+//     img.classList.add('img')
+//     const image = document.createElement('image')
+//     p.classLirs.add('meta')
+//     div.appendChild(image)
+//     const para = document.createElement('iamge');
+//     div.appendChild(para);
+//     document.querySelector('.chat-messages').appendChild(div);
+// }
 
 
 
@@ -135,29 +141,31 @@ function outputUsers(users) {
 }
 
 
+
 // document.addEventListener("DOMContentLoaded", init);
 // function init() {
 //     document.getElementById("btnSearch").addEventListener("click", ev => {
 //         ev.preventDefault(); //to stop the page reload
 //         let url = `https://api.giphy.com/v1/gifs/search?api_key=${Gif_Key}&limit=1&q=`;
-//         let str = document.getElementById("search").value.trim();
+//         let str = document.getElementById("msg").value.trim();
 //         url = url.concat(str);
 //         console.log(url)
+
 //         fetch(url)
 //             .then(response => response.json())
 //             .then(content => {
-//                 console.log(content.data)
 //                 console.log('META', content.meta)
 //                 let fig = document.createElement('figure');
 //                 let img = document.createElement('img');
-//                 let fc = document.createElement('figcaption');
+//                 //let fc = document.createElement('figcaption');
 //                 img.src = content.data[0].images.downsized.url;
-//                 img.alt = content.data[0].title;
-//                 fc.textContent = content.data[0].title;
+//                 //img.alt = content.data[0].title;
+//                 //fc.textContent = content.data[0].title;
 //                 fig.appendChild(img);
-//                 fig.appendChild(fc);
+//                 //fig.appendChild(fc);
+//                 socket.emit('chatMessage', img)
 //                 let out = document.querySelector(".out");
-//                 out.insertAdjacentElement("afterbegin", fig);
+//                 out.insertAdjacentElement("afterbegin", fig); x
 //                 document.querySelector("#search").value = "";
 //             })
 //             .catch(err => {
@@ -165,3 +173,20 @@ function outputUsers(users) {
 //             })
 //     })
 // }
+
+const realFileBtn = document.getElementById("real-life");
+const costomBtn = document.getElementById("costom-button");
+const costomTxt = document.getElementById("costom-text");
+
+costomBtn.addEventListener("click", function () {
+    realFileBtn.click()
+    socket.emit('chatMessage', realFileBtn)
+})
+
+realFileBtn.addEventListener("change", function () {
+    if (realFileBtn.value) {
+        costomTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+    } else {
+        costomTxt.innerHTML = "no file chosen"
+    }
+})
