@@ -174,19 +174,19 @@ function outputUsers(users) {
 //     })
 // }
 
-const realFileBtn = document.getElementById("real-life");
-const costomBtn = document.getElementById("costom-button");
-const costomTxt = document.getElementById("costom-text");
+// const realFileBtn = document.getElementById("real-life");
+// const costomBtn = document.getElementById("costom-button");
+// const costomTxt = document.getElementById("costom-text");
 
-costomBtn.addEventListener("click", function () {
-    realFileBtn.click()
-    socket.emit('chatMessage', realFileBtn)
-})
+// costomBtn.addEventListener("click", function () {
+//     realFileBtn.click()
+//     //socket.emit('chatMessage', realFileBtn)
+// })
 
-realFileBtn.addEventListener("change", function () {
-    if (realFileBtn.value) {
-        costomTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-    } else {
-        costomTxt.innerHTML = "no file chosen"
-    }
-})
+// realFileBtn.addEventListener("change", function () {
+//     if (realFileBtn.value) {
+//         costomTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+//     } else {
+//         costomTxt.innerHTML = "no file chosen"
+//     }
+// })
