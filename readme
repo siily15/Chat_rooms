@@ -1,2 +1,9 @@
-run server
-'npm run dev'
+
+```sh
+npm install
+```
+
+Run server
+```sh
+npm run dev
+```
