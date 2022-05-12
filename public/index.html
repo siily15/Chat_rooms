@@ -5,19 +5,32 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link href="public/css/style.css" rel="stylesheet">
 		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+			  theme: {
+				extend: {
+				  colors: {
+					'main': '#26C485',
+					'text': '#553A41',
+				  }
+				}
+			  }
+			}
+		  </script>
 		<title class="">ChatCord App</title>
 	</head>
-	<body class="bg-black p-4 flex flex-col justify-center min-h-screen max-w-md mx-auto">
-		<div class="join-container bg-blue-600 px-24 py-24">
+	<body class="bg-main  flex flex-col justify-center min-h-screen max-w-md mx-auto">
+		<div class="join-container border-4 p-4">
 			<header class="join-header p-1">
-				<h1><i class="fa-solid fa-terminal"></i> ChatCord</h1>
+				<h1><i class="fa-solid fa-terminal pb-5"></i>Terminal</h1>
 			</header>
-			<main class="join-main p-2">
+			<main class="join-main p-5">
 				<form action="chat.html">
-					<div class="form-control border ">
-						<label for="username">Username</label>
-						<input
+					<div class="form-control  pb-6 ">
+						<label class="text-lg flex bg-text" for="username"></label>
+						<input class="bg-transparent border-b-2 pr-16 placeholder-text"
 							type="text"
 							name="username"
 							id="username"
@@ -25,9 +38,10 @@
 							required
 						/>
 					</div>
-					<div class="form-control border">
-						<label for="room">Room</label>
-						<select name="room" id="room">
+					<div class="form-control pb-4">
+						<label class="text-lg text-text" for="room">Room</label>
+
+						<select class="flex px-20 rounded-lg text-text" name="room" id="room">
 							<option value="JavaScript">JavaScript</option>
 							<option value="Python">Python</option>
 							<option value="PHP">PHP</option>
@@ -36,7 +50,7 @@
 							<option value="Java">Java</option>
 						</select>
 					</div>
-					<button type="submit" class="btn border">Join Chat</button>
+					<button type="submit" class="btn bg-white px-5 rounded-lg text-text">Join Chat</button>
 				</form>
 			</main>
 		</div>
