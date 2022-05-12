@@ -68,9 +68,10 @@ const getWeather = (command) => {
             if (!res.ok) {
                 socket.emit('chatMessage', msg.value + 'wrong city name')
             }
+            //console.log(res.json())
             return res.json()
             //return res.json()
-        }).then(data => socket.emit('chatMessage', data.main.temp + "℃",))
+        }).then(data => socket.emit('chatMessage', data.main.temp + " ℃ " + city))
 
 
         // if (city === ) {
@@ -83,17 +84,28 @@ const getWeather = (command) => {
 function outputMessage(message) {
     const div = document.createElement('div');
     div.classList.add('message');
+    div.style.color = "#5CDB95";
+    div.style.fontSize = "16px";
+    div.style.fontFamily = "Open Sans";
+    div.style.border = "solid"
+    div.style.borderRadius = "15px"
+    div.style.padding = "10px"
+    div.style.marginTop = "1rem"
     const p = document.createElement('p');
     p.classList.add('meta');
+    p.style.color = "#5CDB95";
     p.innerText = message.username;
-    p.innerHTML += `<span>${message.time}</span>`;
+    p.innerHTML += `<span style="color:rgb(220 38 38); padding-left: 5px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${message.time}</span>`;
     div.appendChild(p);
     const para = document.createElement('p');
     para.classList.add('text');
+    para.style.color = "#EDF5E1"
+    para.style.fontWeight = "bold"
     para.innerText = message.text;
     div.appendChild(para);
     document.querySelector('.chat-messages').appendChild(div);
 }
+
 
 // Add room name to DOM
 function outputRoomName(room) {
